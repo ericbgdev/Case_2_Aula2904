@@ -1,0 +1,22 @@
+@startuml
+actor Usuario
+participant View
+participant Controller
+participant Service
+participant Repository
+database SQLite
+
+Usuario -> View : preenche dados\n(nome, email)
+View -> Controller : criar(nome, email)
+
+Controller -> Service : criar_usuario(nome, email)
+Service -> Service : validar email
+Service -> Repository : salvar(usuario)
+Repository -> SQLite : INSERT
+SQLite --> Repository : OK
+Repository --> Service : OK
+Service --> Controller : sucesso
+
+Controller -> View : resultado da operação
+View -> Usuario : mensagem de sucesso
+@enduml
